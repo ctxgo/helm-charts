@@ -20,6 +20,6 @@ entries:
     sources:
     - https://github.com/ctxgo/go-file-server-ui.git
     urls:
-    - https://github.com/ctxgo/helm-charts/releases/download/go-file-server-1.0.0/go-file-server-1.0.0.tgz
+    - https://github.com/ctxgo/helm-charts/releases/download/1.0.0/go-file-server-1.0.0.tgz
     version: 1.0.0
 generated: "2024-08-27T23:33:56.703018381+08:00"
