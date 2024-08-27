@@ -1,0 +1,153 @@
+global:
+  imageRegistry: ""
+  # kubeVersion: "1.27.2"
+  # imagePullSecrets:
+  #   - harbor-secrets
+  #storageClass: "ceph-filesystem"
+
+image:
+  repository: ""
+  tag: "latest"
+  pullPolicy: Always
+
+deployment:
+  kind: Deployment
+  replicas: 1
+  # deploy spec
+  progressDeadlineSeconds: 600
+  revisionHistoryLimit: 10
+
+
+  # 滚动策略
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+
+# host域名解析记录
+# hostAliases:
+#   - ip: 1.1.1.1
+#     hostnames:
+#       - "examples.com"
+
+# 资源限制
+resources:
+  limits:
+    cpu: "1"
+    memory: 1Gi
+  requests:
+    cpu: 100m
+    memory: 500Mi
+
+nodeSelector: {}
+
+tolerations:
+  # - operator: Exists
+
+# pod spec
+dnsPolicy: ClusterFirst
+restartPolicy: Always
+terminationGracePeriodSeconds: 30
+
+# terminat日志
+terminationLog:
+  enabled: false
+
+podAnnotations: {}
+
+podSecurityContext:
+  {}
+  # fsGroup: 2000
+
+securityContext:
+  {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+# 持久化
+persistence:
+  enabled: false
+  existingClaim: ""
+  storageClass: ""
+  accessModes:
+    - ReadWriteMany
+  size: 8Gi
+
+  # PVC的Annotations
+  annotations: {}
+  # annotations:
+  #   volume.beta.kubernetes.io/storage-provisioner: fuseim.pri/ifs
+
+  # PVC的Labels
+  labels: {}
+  # 为pvc选取一个事先存在的pv
+
+  selector: {}
+  # selector:
+  #   matchLabels:
+  #     app: my-app
+
+  # Mount path of app data volume
+  mountPath: /basedir
+
+# app应用的配置文件
+configMap: ""
+# configMap: |-
+#   foo: bar
+
+existingConfigMap: ""
+
+service:
+  type: ClusterIP
+  sessionAffinity: None
+  ports:
+    # - name: http
+    #   containerPort: 80
+    #   protocol: TCP
+    # - name: socketio
+    #   containerPort: 90
+    #   protocol: TCP
+
+
+affinity:
+  # nodeAffinity:
+  #   matchExpressions:
+  #     key: disk_type
+  #     operator: In
+  #     values: ["ssd0"]
+  # podAntiAffinity:
+  #   matchExpressions:
+  #     key: app.kubernetes.io/name
+  #     operator: In
+  #     values: ["foo", "bar"]
+
+readinessProbe:
+  # httpGet:
+  #   path: /health
+  #   port: 80
+  #   scheme: HTTP
+  initialDelaySeconds: 10
+  successThreshold: 1
+  failureThreshold: 3
+  timeoutSeconds: 5
+  periodSeconds: 5
+livenessProbe:
+  # httpGet:
+  #   port: 80
+  #   path: /health
+  #   scheme: HTTP
+  initialDelaySeconds: 10
+  successThreshold: 1
+  failureThreshold: 3
+  timeoutSeconds: 10
+  periodSeconds: 5
+
+# 定义container的arguments启动参数
+args: []
+
+env: []

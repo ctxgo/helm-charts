@@ -1,0 +1,25 @@
+{{- if include "app.persistence.createPVC" . -}}
+{{- $persistence := .Values.persistence -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "app.persistence.pvcName" . }}
+  {{- include "app.labels.template" . | nindent 2 }}
+  {{- if or .Values.commonAnnotations $persistence.annotations }}
+  annotations:
+  {{- if .Values.commonAnnotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
+  {{- if $persistence.annotations }}
+    {{- include "common.tplvalues.render" (dict "value" $persistence.annotations "context" $) | nindent 4 }}
+  {{- end }}
+  {{- end }}
+spec:
+  accessModes:
+    {{- include "common.tplvalues.render" (dict "value" $persistence.accessModes "context" $) | nindent 4 }}
+  resources:
+    requests:
+      storage: {{ $persistence.size }}
+  {{- include "common.storage.class" (dict "persistence" $persistence "global" .Values.global) | nindent 2 }}
+  volumeMode: Filesystem
+{{- end -}}

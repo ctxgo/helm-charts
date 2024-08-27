@@ -1,0 +1,10 @@
+{{- if (include "app.createConfigMap" .) -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "app.configMapName" . }}
+  {{- include "app.metadata.template" . | nindent 2 }}
+data:
+  config.yml: |-
+    {{- include "common.tplvalues.render" ( dict "value" .Values.openrasp "context" $ ) | nindent 4 }}
+{{- end -}}
