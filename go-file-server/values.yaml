@@ -110,10 +110,10 @@ frontend:
   resources:
     limits:
       cpu: 500m
-      memory: 2816Mi
+      memory: 800Mi
     requests:
-      cpu: 20m
-      memory: 1792Mi
+      cpu: 10m
+      memory: 100Mi
 
   # 就绪性探针，用于判断容器是否准备好处理请求
   readinessProbe:
