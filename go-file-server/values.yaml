@@ -169,6 +169,7 @@ ingressRoute:
   enabled: false
   # annotations:
   #   for: bar
+  hostName: example.com
   entryPoints:
     - web
     - websecure
