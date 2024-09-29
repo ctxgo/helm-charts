@@ -3,7 +3,7 @@ entries:
   go-file-server:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2024-08-27T23:33:56.704521709+08:00"
+    created: "2024-09-30T01:26:50.677230621+08:00"
     dependencies:
     - alias: backend
       name: app
@@ -14,12 +14,12 @@ entries:
       repository: ""
       version: 1.0.0
     description: A Helm chart for Kubernetes
-    digest: a584ff28079bacfd8ca7b53c231e387549ea1ad6d44790bf5ac7f05cc7905e09
+    digest: d5ccb592b811069337966314b9e0b2ae9df878608b8905f90beb0c04a9049400
     name: go-file-server
-    type: application
     sources:
-    - https://github.com/ctxgo/go-file-server-ui.git
+    - https://github.com/ctxgo/helm-charts/tree/master/go-file-server
+    type: application
     urls:
     - https://github.com/ctxgo/helm-charts/releases/download/1.0.0/go-file-server-1.0.0.tgz
     version: 1.0.0
-generated: "2024-08-27T23:33:56.703018381+08:00"
+generated: "2024-09-30T01:26:50.676138429+08:00"
