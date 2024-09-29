@@ -31,3 +31,6 @@ dependencies:
   - name: app
     version: 1.0.0
     alias: frontend
+
+sources:
+  - https://github.com/ctxgo/helm-charts/tree/master/go-file-server
