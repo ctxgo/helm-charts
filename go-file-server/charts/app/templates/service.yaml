@@ -4,8 +4,15 @@ kind: Service
 metadata:
   name: {{ include "common.names.fullname" . }}
   {{- include "app.metadata.template" . | nindent 2 }}
+  {{- if .Values.service.annotations }}
+  annotations:
+    {{- include "common.tplvalues.render" ( dict "value" .Values.service.annotations "context" $) | nindent 4 }}
+  {{- end }}
 spec:
   type: {{ .Values.service.type }}
+  {{- if and (eq .Values.service.type "LoadBalancer") .Values.service.loadBalancerIP}}
+  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
+  {{- end }}
   sessionAffinity: {{ .Values.service.sessionAffinity }}
   ports:
     {{- range .Values.service.ports }}
@@ -13,6 +20,9 @@ spec:
       targetPort: {{ .name }}
       protocol: {{ .protocol }}
       name: {{ .name }}
+      {{- if and (eq $.Values.service.type "NodePort") .nodePort}}
+      nodePort: {{ .nodePort }}
+      {{- end }}
     {{- end }}
   selector:
     {{- include "common.labels.matchLabels" . | nindent 4 }}
