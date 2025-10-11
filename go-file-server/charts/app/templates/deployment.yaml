@@ -1,0 +1,21 @@
+{{- if eq .Values.deployment.kind "Deployment" -}}
+{{- $deployment := .Values.deployment -}}
+apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
+kind: Deployment
+metadata:
+  name: {{ include "common.names.fullname" . }}
+  {{- include "app.metadata.template" . | nindent 2 }}
+spec:
+  progressDeadlineSeconds: {{ $deployment.progressDeadlineSeconds | default 600 }}
+  revisionHistoryLimit: {{ $deployment.revisionHistoryLimit | default 10 }}
+  replicas: {{ $deployment.replicas }}
+  selector:
+    matchLabels:
+      {{- include "common.labels.matchLabels" . | nindent 6 }}
+  {{- if $deployment.strategy }}
+  strategy:
+    {{- include "common.tplvalues.render" (dict "value" $deployment.strategy "context" $) | nindent 4 }}
+  {{- end }}
+  template:
+    {{- include "app.spec.template" . | nindent 4 }}
+{{- end -}}

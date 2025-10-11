@@ -1,0 +1,12 @@
+vendor/
+go.sum
+runtime/git/*.yml
+runtime/task/*.log
+runtime/*.log
+.idea/
+.vscode/
+awesome-runner
+.DS_Store
+runtime/*.log
+data/pave.db
+__pycache__/

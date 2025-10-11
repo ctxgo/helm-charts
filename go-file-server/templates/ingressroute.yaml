@@ -1,0 +1,39 @@
+{{- if .Values.ingressRoute.enabled -}}
+{{- $ingressRoute := .Values.ingressRoute -}}
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ include "common.names.fullname" . }}
+  labels:
+    {{- include "common.labels.standard" . | nindent 4 }}
+    {{- if .Values.commonLabels }}
+      {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- with $ingressRoute.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- if or .Values.commonAnnotations $ingressRoute.annotations }}
+  annotations: 
+    {{- if .Values.commonAnnotations }}
+      {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- with $ingressRoute.annotations }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- end }}
+spec:
+  {{- with .Values.entryPoints }}
+  entryPoints:
+    {{- . | toYaml | nindent 4 }}
+  {{- end }}
+  tls:
+    secretName: {{ $ingressRoute.tls.secretName }}
+  routes:
+  {{- range $ingressRoute.expose }}
+  - match: Host(`{{ $ingressRoute.hostName }}`) && PathPrefix(`{{ .pathPrefix }}`)
+    kind: Rule
+    services:
+    - name: {{ include "subchart.fullname" (dict "subchartName" .service "context" $) }}
+      port: {{ .targetPort }}
+  {{- end }}
+{{- end -}}

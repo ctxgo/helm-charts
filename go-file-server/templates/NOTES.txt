@@ -1,0 +1,24 @@
+ {{ .Chart.Name }} 安装成功
+
+release名称为： {{ .Release.Name }}
+
+{{- if .Values.ingress.enabled }}
+ingress url:
+{{- range $host := .Values.ingress.hosts }}
+  {{- range .paths }}
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ .path }}
+  {{- end }}
+{{- end }}
+{{- else if .Values.ingressRoute.enabled }}
+ingressRoute url:  
+  {{- range $expose := .Values.ingressRoute.expose }}
+    {{- range .paths }}
+    http{{ if $.Values.ingressRoute.tls }}s{{ end }}://{{ $.Values.ingressRoute.hostName }}{{ $expose.pathPrefix }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+
+使用如下命令查看该release的更多信息：
+    $ helm status {{ .Release.Name }}
+    $ helm get all {{ .Release.Name }}
+
