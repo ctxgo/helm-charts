@@ -1,6 +1,6 @@
 # helm 仓库合集
 
-欢迎来集合仓库！。
+欢迎来集合仓库！
 
 ## 仓库结构
 
@@ -8,6 +8,7 @@
 
 ### 仓库应用列表
 
-1. **go-file-server**
-   - **描述**：[go-file-server](https://github.com/goccx/go-file-server.git) 项目的仓库
-   - **文档**：[阅读更多](/go-file-server/README.md)
+**1. go-file-server**
+
+- **描述**：[go-file-server](https://github.com/goccx/go-file-server.git) 项目的仓库
+- **文档**：[阅读更多](/go-file-server/README.md)
