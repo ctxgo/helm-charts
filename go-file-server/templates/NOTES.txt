@@ -12,9 +12,7 @@ ingress url:
 {{- else if .Values.ingressRoute.enabled }}
 ingressRoute url:  
   {{- range $expose := .Values.ingressRoute.expose }}
-    {{- range .paths }}
     http{{ if $.Values.ingressRoute.tls }}s{{ end }}://{{ $.Values.ingressRoute.hostName }}{{ $expose.pathPrefix }}
-    {{- end }}
   {{- end }}
 {{- end }}
 
