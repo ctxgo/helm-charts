@@ -205,6 +205,11 @@ ingress:
 
 ingressRoute:
   enabled: false
+  # Traefik IngressRoute API 版本（可选）
+  # 如果不填写，将自动检测 Traefik 版本
+  # Traefik v2.x 使用: traefik.containo.us/v1alpha1
+  # Traefik v3.x 使用: traefik.io/v1alpha1
+  apiVersion: ""
   # annotations:
   #   for: bar
   hostName: example.com
